@@ -1,11 +1,15 @@
 package com.PowerPlant.BatteryInfoService.controller;
 
+import com.PowerPlant.BatteryInfoService.dto.BatteryInfoDTO;
 import com.PowerPlant.BatteryInfoService.model.Battery;
 import com.PowerPlant.BatteryInfoService.repository.BatteryInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class BatteryInfoController {
@@ -19,10 +23,11 @@ public class BatteryInfoController {
         return batteryInfoRepository.save(battery);
     }
 
-    @GetMapping("/getbatteryInfo")
-    public List<Battery> getBatteryInfo(@RequestParam int postcodeStart, @RequestParam int postcodeEnd){
+    @GetMapping("/statisticsOfBattery")
+    public BatteryInfoDTO getAverageWatCapacity(@RequestParam int postCodeStart, @RequestParam int postCodeEnd){
 
-        return batteryInfoRepository.findRecordsInRange(postcodeStart,postcodeEnd);
+        Double averageWatCapacity = batteryInfoRepository.sumWatCapacity(postCodeStart, postCodeEnd);
+        int sumOfWatCapacity = batteryInfoRepository.avgWatCapacity(postCodeStart, postCodeEnd);
+        return new BatteryInfoDTO(averageWatCapacity, sumOfWatCapacity);
     }
-
 }

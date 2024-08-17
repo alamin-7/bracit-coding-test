@@ -3,7 +3,6 @@ package com.PowerPlant.BatteryInfoService.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "battry")
 public class Battery {
 
     // battery ID will be use as unique id in database table
@@ -14,8 +13,17 @@ public class Battery {
     private int postcode;
     private int watcapacity;
 
+    public Battery() {
+    }
+
     public Battery(Long batteryid, String name, int postcode, int watcapacity) {
         this.batteryid = batteryid;
+        this.name = name;
+        this.postcode = postcode;
+        this.watcapacity = watcapacity;
+    }
+
+    public Battery(String name, int watcapacity, int postcode) {
         this.name = name;
         this.postcode = postcode;
         this.watcapacity = watcapacity;
